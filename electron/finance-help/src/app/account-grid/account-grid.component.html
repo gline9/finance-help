@@ -1,0 +1,28 @@
+
+<dx-data-grid #dataGrid
+    [dataSource]="dataSource">
+    <dxo-editing
+        [allowUpdating]="false"
+        [allowAdding]="true"
+        [allowDeleting]="false"
+        mode="popup">
+    </dxo-editing>
+    <dxi-column
+        caption="Balance"
+        dataType="number"
+        alignment="left"
+        dataField="balance">
+    </dxi-column>
+    <dxi-column
+        caption="Rate"
+        dataType="number"
+        alignment="left"
+        dataField="rate">
+    </dxi-column>
+    <dxi-column
+        caption="Compounds Per Year"
+        dataType="number"
+        alignment="left"
+        dataField="compoundsPerYear">
+    </dxi-column>
+</dx-data-grid>
