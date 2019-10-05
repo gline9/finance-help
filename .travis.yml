@@ -6,4 +6,5 @@ dist: trusty
 jdk: oraclejdk8
 
 script:
+  - chmod 777 ./backend/finance-help/gradlew
   - ./backend/finance-help/gradlew test --scan -s
