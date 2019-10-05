@@ -13,16 +13,13 @@ script:
   - cd backend/finance-help
   - chmod 777 ./gradlew
   - ./gradlew test --scan -s
+  - ./gradlew sonarqube
 
 addons:
   sonarcloud:
     organization: "gline9"
     token:
       secure: "mtsDj+c4WCnXSH0MCk+yd652b/l0iz58Cup9B9YUOfbe/XTUNBqlem1kEyEUQb2NCEzx4VC+g5OjRiIIcB3Hio6J9A5557hbNhgY+Fa5XjOdXhK+bX8Wu1tHCHoj6+38/lGUHLb0vBU1KSMG70ujfifQ1Z7XhzWMxW+wwDVKY4yW9fsdI0gHGleSBIQBslWw19nLS9bzwwikH7G8Z5eUCi8X77xcgM+Su9SxfcWoVUatknF1/PjanOry+dCA9vfsRHZI0j6JTCN1KW0cJlT8FNy0QhZzNLE9ZDhZINauAnA/xDZwoart44EKWNcbxYhSXmfbaPOG/5tDiLprA15AnKMyBdq7tfjNDArL8CuDaXXpNX4SjTc035caDgoEdu/w3fXo/hB7avXcouKzeiojg6u6OyYkZn6NkqL411YsVsJ6xc0qfAZzDHFEtecMK/N9rgJGYmFYU0rWeLImWezAOsWvFrnkXlcp/6pj7XOMwYRW36iO1tIX31vwmJ0f1qzUoz6HKQQESGlc2D7rW+7KoJEtWHhThttAlPqXlAD5wAfQx2oNf2KK4tXgsPrI34CpQxvpUcurlGDmmjySGSSMu1Fcw+NiK9IS+ZJZpQeWuVMrd1WTJgNfs0maY3taMbI7w4zM3Ta2ztl3bsEG4vhzhuujnfZ1fXi2qhyIJYBJAjw="
-  script:
-    - cd backend/finance-help
-    - chmod 777 ./gradlew
-    - ./gradlew sonarqube
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
