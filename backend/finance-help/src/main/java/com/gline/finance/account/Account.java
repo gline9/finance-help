@@ -1,6 +1,6 @@
 package com.gline.finance.account;
 
-import com.gline.finance.serialization.Momento;
+import com.gline.finance.serialization.Memento;
 import com.gline.finance.serialization.Converters;
 import com.gline.finance.serialization.Serializable;
 
@@ -33,13 +33,13 @@ public class Account implements Serializable
         this.lastCompoundTime = lastCompoundTime;
     }
 
-    private Account(Momento momento)
+    private Account(Memento memento)
     {
-        balance = momento.getValue(BALANCE_FIELD, Converters.numberDoubleConverter());
-        id = momento.getValue(ID_FIELD, Converters.identity(String.class), () -> UUID.randomUUID().toString());
-        rate = momento.getValue(RATE_FIELD, Converters.numberDoubleConverter());
-        compoundsPerYear = momento.getValue(COMPOUND_FIELD, Converters.numberDoubleConverter());
-        lastCompoundTime = momento.getValue(LAST_COMPOUND_TIME, Converters.instantMillisConverter());
+        balance = memento.getValue(BALANCE_FIELD, Converters.numberDoubleConverter());
+        id = memento.getValue(ID_FIELD, Converters.identity(String.class), () -> UUID.randomUUID().toString());
+        rate = memento.getValue(RATE_FIELD, Converters.numberDoubleConverter());
+        compoundsPerYear = memento.getValue(COMPOUND_FIELD, Converters.numberDoubleConverter());
+        lastCompoundTime = memento.getValue(LAST_COMPOUND_TIME, Converters.instantMillisConverter());
     }
 
     public static Account newBasicAccount(double balance)
@@ -52,9 +52,9 @@ public class Account implements Serializable
         return new Account(balance, UUID.randomUUID().toString(), rate, compoundsPerYear, Instant.now());
     }
 
-    public static Account fromMomento(Momento momento)
+    public static Account fromMemento(Memento memento)
     {
-        return new Account(momento);
+        return new Account(memento);
     }
 
     public double getBalance()
@@ -81,9 +81,9 @@ public class Account implements Serializable
     }
 
     @Override
-    public Momento serializeToMomento()
+    public Memento serializeToMemento()
     {
-        Momento ret = Momento.emptyBean();
+        Memento ret = Memento.emptyBean();
 
         ret.setProperty(BALANCE_FIELD, balance);
         ret.setProperty(ID_FIELD, id);

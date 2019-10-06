@@ -6,30 +6,30 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Supplier;
 
-public class Momento
+public class Memento
 {
     private final Map<String, Property> propertyMap;
 
-    private Momento(Map<String, Property> propertyMap)
+    private Memento(Map<String, Property> propertyMap)
     {
         this.propertyMap = propertyMap;
     }
 
-    public static Momento emptyBean()
+    public static Memento emptyBean()
     {
-        return new Momento(new HashMap<>());
+        return new Memento(new HashMap<>());
     }
 
-    public static Momento fromMap(Map<String, Object> propertyMap)
+    public static Memento fromMap(Map<String, Object> propertyMap)
     {
-        Momento momento = emptyBean();
+        Memento memento = emptyBean();
 
         for (Map.Entry<String, Object> entry : propertyMap.entrySet())
         {
-            momento.setProperty(entry.getKey(), Property.forValue(entry.getValue()));
+            memento.setProperty(entry.getKey(), Property.forValue(entry.getValue()));
         }
 
-        return momento;
+        return memento;
     }
 
     public void setProperty(String key, Object value)

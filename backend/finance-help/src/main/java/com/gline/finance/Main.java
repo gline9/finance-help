@@ -2,9 +2,10 @@ package com.gline.finance;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
-import com.gline.finance.account.AccountHandler;
-import com.gline.finance.account.AccountStore;
-import com.gline.finance.account.InMemoryAccountStore;
+import com.gline.finance.account.*;
+import com.gline.finance.persistence.JsonPersistenceManager;
+import com.gline.finance.persistence.PersistenceHandler;
+import com.gline.finance.persistence.PersistenceManager;
 import com.gline.finance.serialization.*;
 import ratpack.func.Action;
 import ratpack.handling.Chain;
@@ -14,14 +15,15 @@ public class Main
 {
     public static void main(String[] args) throws Exception
     {
-
-        AccountStore accountStore = new InMemoryAccountStore();
+        PersistenceManager persistenceManager = new JsonPersistenceManager();
+        AccountStore accountStore = persistenceManager.registerStore(new InMemoryAccountStore());
         TotalBalanceStore totalBalanceStore = new AggregatingTotalBalanceStore(accountStore);
 
         initializeRatpackServer(chain -> chain
             .get(ctx -> ctx.render(""))
             .path("total/balance", new TotalBalanceHandler(totalBalanceStore))
-            .path("accounts", new AccountHandler(accountStore)));
+            .path("accounts", new AccountHandler(accountStore))
+            .path("persist", new PersistenceHandler(persistenceManager)));
 
     }
 
@@ -29,8 +31,8 @@ public class Main
     {
         ObjectMapper mapper = new ObjectMapper();
         SimpleModule module = new SimpleModule();
-        module.addDeserializer(Momento.class, new MomentoJsonDeserializer());
-        module.addSerializer(Serializable.class, new MomentoJsonSerializer());
+        module.addDeserializer(Memento.class, new MementoJsonDeserializer());
+        module.addSerializer(Serializable.class, new MementoJsonSerializer());
         mapper.registerModule(module);
 
         return mapper;

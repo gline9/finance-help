@@ -1,7 +1,7 @@
 package com.gline.finance.account;
 
 import com.gline.finance.CRUDHandler;
-import com.gline.finance.serialization.Momento;
+import com.gline.finance.serialization.Memento;
 
 import java.util.List;
 
@@ -27,8 +27,8 @@ public class AccountHandler implements CRUDHandler<AccountCreationRequest, Accou
     }
 
     @Override
-    public AccountCreationRequest makePostObject(Momento momento)
+    public AccountCreationRequest makePostObject(Memento memento)
     {
-        return AccountCreationRequest.fromMomento(momento);
+        return AccountCreationRequest.fromMomento(memento);
     }
 }

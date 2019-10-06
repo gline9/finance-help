@@ -1,4 +1,4 @@
-package com.gline.finance;
+package com.gline.finance.account;
 
 import ratpack.handling.Context;
 import ratpack.handling.Handler;

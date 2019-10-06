@@ -6,14 +6,19 @@ import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AppService } from './app.service';
 import { TotalBalanceComponent } from './total-balance/total-balance.component';
-import { DxTextBoxModule, DxFormModule, DxDataGridModule } from 'devextreme-angular';
+import { DxTextBoxModule, DxFormModule, DxDataGridModule, DxButtonModule } from 'devextreme-angular';
 import { AccountGridComponent } from './account-grid/account-grid.component';
+import { NgxElectronModule } from 'ngx-electron';
+import { OpenFileComponent } from './open-file/open-file.component';
+import { AccountOverviewComponent } from './account-overview/account-overview.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TotalBalanceComponent,
-    AccountGridComponent
+    AccountGridComponent,
+    OpenFileComponent,
+    AccountOverviewComponent
   ],
   imports: [
     BrowserModule,
@@ -21,7 +26,9 @@ import { AccountGridComponent } from './account-grid/account-grid.component';
     HttpClientModule,
     DxTextBoxModule,
     DxFormModule,
-    DxDataGridModule
+    DxDataGridModule,
+    DxButtonModule,
+    NgxElectronModule
   ],
   providers: [AppService],
   bootstrap: [AppComponent]

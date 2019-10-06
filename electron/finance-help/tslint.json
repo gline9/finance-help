@@ -32,6 +32,7 @@
       140
     ],
     "member-access": false,
+    "one-line": false,
     "member-ordering": [
       true,
       {

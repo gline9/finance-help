@@ -1,7 +1,4 @@
-package com.gline.finance;
-
-import com.gline.finance.account.Account;
-import com.gline.finance.account.AccountStore;
+package com.gline.finance.account;
 
 public class AggregatingTotalBalanceStore implements TotalBalanceStore
 {
