@@ -2,7 +2,6 @@ package com.gline.finance.persistence;
 
 import com.gline.finance.serialization.Converters;
 import com.gline.finance.serialization.Memento;
-import com.gline.finance.serialization.Serializable;
 
 import java.io.File;
 import java.io.IOException;
@@ -30,14 +29,13 @@ public class PersistenceCommand
     {
         File file = new File(fileName);
 
-        switch(type)
+        if (PersistenceCommandType.LOAD == type)
         {
-            case LOAD:
-                manager.readFromFile(file);
-                break;
-            case SAVE:
-                manager.persistToFile(file);
-                break;
+            manager.readFromFile(file);
+        }
+        else if (PersistenceCommandType.SAVE == type)
+        {
+            manager.persistToFile(file);
         }
     }
 }

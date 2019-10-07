@@ -19,7 +19,7 @@ public class TotalBalanceHandler implements Handler
             .get(this::get));
     }
 
-    public void get(Context ctx) throws Exception
+    public void get(Context ctx)
     {
         ctx.render(Double.toString(balanceStore.getTotalBalance()));
     }
