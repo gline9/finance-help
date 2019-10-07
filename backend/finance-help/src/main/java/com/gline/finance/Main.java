@@ -27,7 +27,7 @@ public class Main
 
     }
 
-    private static ObjectMapper getObjectMapper()
+    public static ObjectMapper getObjectMapper()
     {
         ObjectMapper mapper = new ObjectMapper();
         SimpleModule module = new SimpleModule();
