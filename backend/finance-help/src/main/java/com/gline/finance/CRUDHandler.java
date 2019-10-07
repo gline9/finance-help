@@ -1,6 +1,6 @@
 package com.gline.finance;
 
-import com.gline.finance.serialization.Momento;
+import com.gline.finance.serialization.Memento;
 import com.gline.finance.serialization.Serializable;
 import ratpack.handling.Context;
 import ratpack.handling.Handler;
@@ -17,7 +17,7 @@ public interface CRUDHandler<POST, T extends Serializable> extends Handler
     {
         ctx.byMethod(subCtx -> subCtx
                 .get(getCtx -> getCtx.render(json(this.getAll())))
-                .post(putCtx -> putCtx.parse(Momento.class).then(data -> {
+                .post(putCtx -> putCtx.parse(Memento.class).then(data -> {
                     T ret = post(makePostObject(data));
                     putCtx.render(json(ret));
                 })));
@@ -27,7 +27,7 @@ public interface CRUDHandler<POST, T extends Serializable> extends Handler
 
     T post(POST value);
 
-    POST makePostObject(Momento momento);
+    POST makePostObject(Memento memento);
 
 
 }

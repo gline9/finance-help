@@ -6,12 +6,12 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 
 import java.io.IOException;
 
-public class MomentoJsonSerializer extends JsonSerializer<Serializable>
+public class MementoJsonSerializer extends JsonSerializer<Serializable>
 {
     @Override
     public void serialize(Serializable serializable, JsonGenerator gen, SerializerProvider serializers) throws IOException
     {
-        Momento value = serializable.serializeToMomento();
+        Memento value = serializable.serializeToMemento();
         gen.writeStartObject();
         for (String key : value.getKeys())
         {

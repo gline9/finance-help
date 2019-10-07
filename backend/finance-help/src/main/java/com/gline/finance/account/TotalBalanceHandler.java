@@ -1,4 +1,4 @@
-package com.gline.finance;
+package com.gline.finance.account;
 
 import ratpack.handling.Context;
 import ratpack.handling.Handler;
@@ -19,7 +19,7 @@ public class TotalBalanceHandler implements Handler
             .get(this::get));
     }
 
-    public void get(Context ctx) throws Exception
+    public void get(Context ctx)
     {
         ctx.render(Double.toString(balanceStore.getTotalBalance()));
     }

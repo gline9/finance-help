@@ -1,0 +1,19 @@
+
+<dx-text-box
+    [(value)]="fileName">
+    <dxi-button
+        location="after"
+        name="open"
+        [options]="{icon: 'folder', onClick: findFile}">
+    </dxi-button>
+</dx-text-box>
+
+<dx-button
+    (onClick)="openFile()"
+    text="Open">
+</dx-button>
+
+<dx-button
+    (onClick)="newFile()"
+    text="New">
+</dx-button>

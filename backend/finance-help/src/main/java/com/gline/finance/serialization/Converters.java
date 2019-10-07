@@ -47,4 +47,22 @@ public class Converters
     {
         return fromNumber(number -> Instant.ofEpochMilli(number.longValue()));
     }
+
+    public static <T extends Enum<T>> Converter<String, T> stringEnumConverter(Class<T> clazz)
+    {
+        return new Converter<String, T>()
+        {
+            @Override
+            public T convert(String input)
+            {
+                return Enum.valueOf(clazz, input);
+            }
+
+            @Override
+            public String cast(Object obj)
+            {
+                return (String)obj;
+            }
+        };
+    }
 }

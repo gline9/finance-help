@@ -7,15 +7,10 @@
  */
 
 plugins {
-    // Apply the java plugin to add support for Java
     id 'java'
-
-    // Apply the application plugin to add support for building a CLI application
     id 'application'
-
-    // Apply the groovy plugin to also add support for Groovy (needed for Spock)
     id 'groovy'
-
+    id 'jacoco'
     id 'io.ratpack.ratpack-java' version '1.7.3'
     id 'com.gradle.build-scan' version '2.1'
     id 'org.sonarqube' version '2.7.1'
@@ -33,6 +28,13 @@ buildScan {
     termsOfServiceAgree = 'yes'
 }
 
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        html.destination file("${buildDir}/jacocoHtml")
+    }
+}
+
 repositories {
     // Use jcenter for resolving dependencies.
     // You can declare any Maven/Ivy/file repository here.
@@ -48,6 +50,7 @@ dependencies {
     // Use the awesome Spock testing and specification framework even with Java
     testImplementation 'org.spockframework:spock-core:1.2-groovy-2.5'
     testImplementation 'junit:junit:4.12'
+    testImplementation ratpack.dependency('groovy-test')
 }
 
 application {

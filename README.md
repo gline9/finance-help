@@ -7,3 +7,7 @@
 # finance-help
 
 Basic program for helping with managing personal finances.
+
+# Contributing
+
+Run `npm run electron-full` inside `electron/finance-help` to run the project.

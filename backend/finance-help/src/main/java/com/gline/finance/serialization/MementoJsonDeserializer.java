@@ -8,12 +8,12 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 import java.io.IOException;
 import java.util.Map;
 
-public class MomentoJsonDeserializer extends JsonDeserializer<Momento>
+public class MementoJsonDeserializer extends JsonDeserializer<Memento>
 {
     @Override
     @SuppressWarnings("unchecked")
-    public Momento deserialize(JsonParser p, DeserializationContext ctxt) throws IOException, JsonProcessingException
+    public Memento deserialize(JsonParser p, DeserializationContext ctxt) throws IOException, JsonProcessingException
     {
-        return Momento.fromMap(ctxt.readValue(p, Map.class));
+        return Memento.fromMap(ctxt.readValue(p, Map.class));
     }
 }

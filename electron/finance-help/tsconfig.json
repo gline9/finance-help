@@ -16,12 +16,14 @@
     ],
     "lib": [
       "es2018",
-      "dom"
+      "dom",
     ],
     "paths": {
       "jszip": [
         "node_modules/jszip/dist/jszip.min.js"
-      ]
+      ],
+      // "fs": [ "src/shims/noop" ],
+      // "path": [ "src/shims/path" ]
     }
   },
   "angularCompilerOptions": {
