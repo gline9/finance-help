@@ -15,6 +15,7 @@ class InMemoryAccountStoreSpec extends Specification
         accountCreationMemento.setProperty("balance", 100d)
         accountCreationMemento.setProperty("rate", 1)
         accountCreationMemento.setProperty("compoundsPerYear", 1)
+        accountCreationMemento.setProperty("name", "foobar")
         def accountCreation = AccountCreationRequest.fromMomento(accountCreationMemento)
 
         when:
@@ -24,6 +25,7 @@ class InMemoryAccountStoreSpec extends Specification
         then:
 
         1 == accountStore.getAccounts().size()
+        "foobar" == accountStore.getAccounts()[0].name
     }
 
     void "should replace account state properly"()
@@ -36,6 +38,7 @@ class InMemoryAccountStoreSpec extends Specification
         accountCreationMemento.setProperty("balance", 100d)
         accountCreationMemento.setProperty("rate", 1)
         accountCreationMemento.setProperty("compoundsPerYear", 1)
+        accountCreationMemento.setProperty("name", "foobar")
         def accountCreation = AccountCreationRequest.fromMomento(accountCreationMemento)
         accountStore.createAccount(accountCreation)
 
@@ -50,5 +53,6 @@ class InMemoryAccountStoreSpec extends Specification
         then:
 
         1 == accountStore.getAccounts().size()
+        "foobar" == accountStore.getAccounts()[0].name
     }
 }

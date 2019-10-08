@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { AccountsService, Account } from './accounts';
 import { Subscription, timer } from 'rxjs';
 import ArrayStore from 'devextreme/data/array_store';
@@ -12,7 +12,7 @@ import { DxDataGridComponent } from 'devextreme-angular';
         './account-grid.component.scss'
     ]
 })
-export class AccountGridComponent implements OnInit
+export class AccountGridComponent implements OnInit, OnDestroy
 {
     @ViewChild('dataGrid', {static: true}) dataGrid: DxDataGridComponent;
 
@@ -41,6 +41,11 @@ export class AccountGridComponent implements OnInit
         });
     }
 
+    public ngOnDestroy(): void
+    {
+        this.accountSubscription.unsubscribe();
+    }
+
     private updateAccountList(): void
     {
         this.accountService.getAllAccounts().subscribe(
@@ -56,7 +61,7 @@ export class AccountGridComponent implements OnInit
     public createAccount(accountData: any)
     {
         this.accountService.createAccount(
-            Account.newAccount(accountData.balance, accountData.rate, accountData.compoundsPerYear)
+            Account.newAccount(accountData.name, accountData.balance, accountData.rate, accountData.compoundsPerYear)
         ).subscribe(() => {
             this.updateAccountList();
         });

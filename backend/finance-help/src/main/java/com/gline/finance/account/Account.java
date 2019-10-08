@@ -17,15 +17,18 @@ public class Account implements Serializable
     private static final String RATE_FIELD = "rate";
     private static final String COMPOUND_FIELD = "compoundsPerYear";
     private static final String LAST_COMPOUND_TIME = "lastCompoundTime";
+    private static final String NAME_FIELD = "name";
 
     private double balance;
     private final String id;
     private final double rate;
     private final double compoundsPerYear;
     private Instant lastCompoundTime;
+    private String name;
 
-    private Account(double balance, String id, double rate, double compoundsPerYear, Instant lastCompoundTime)
+    private Account(String name, double balance, String id, double rate, double compoundsPerYear, Instant lastCompoundTime)
     {
+        this.name = name;
         this.balance = balance;
         this.id = id;
         this.rate = rate;
@@ -35,6 +38,7 @@ public class Account implements Serializable
 
     private Account(Memento memento)
     {
+        name = memento.getValue(NAME_FIELD, Converters.identity(String.class));
         balance = memento.getValue(BALANCE_FIELD, Converters.numberDoubleConverter());
         id = memento.getValue(ID_FIELD, Converters.identity(String.class), () -> UUID.randomUUID().toString());
         rate = memento.getValue(RATE_FIELD, Converters.numberDoubleConverter());
@@ -42,14 +46,9 @@ public class Account implements Serializable
         lastCompoundTime = memento.getValue(LAST_COMPOUND_TIME, Converters.instantMillisConverter());
     }
 
-    public static Account newBasicAccount(double balance)
+    public static Account newCompoundingAccount(String name, double balance, double rate, double compoundsPerYear)
     {
-        return Account.newCompoundingAccount(balance, 0d, 1d);
-    }
-
-    public static Account newCompoundingAccount(double balance, double rate, double compoundsPerYear)
-    {
-        return new Account(balance, UUID.randomUUID().toString(), rate, compoundsPerYear, Instant.now());
+        return new Account(name, balance, UUID.randomUUID().toString(), rate, compoundsPerYear, Instant.now());
     }
 
     public static Account fromMemento(Memento memento)
@@ -67,6 +66,11 @@ public class Account implements Serializable
     public String getId()
     {
         return id;
+    }
+
+    public String getName()
+    {
+        return name;
     }
 
     public void makeBalanceCurrent()
@@ -90,6 +94,7 @@ public class Account implements Serializable
         ret.setProperty(RATE_FIELD, rate);
         ret.setProperty(COMPOUND_FIELD, compoundsPerYear);
         ret.setProperty(LAST_COMPOUND_TIME, lastCompoundTime.toEpochMilli());
+        ret.setProperty(NAME_FIELD, name);
 
         return ret;
     }

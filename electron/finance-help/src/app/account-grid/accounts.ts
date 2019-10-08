@@ -29,12 +29,13 @@ export class AccountsService
 export class Account
 {
     private id?: string;
+    name: string;
     balance: number;
     rate: number;
     compoundsPerYear: number;
 
     private constructor(
-        args: {balance: number, rate: number, compoundsPerYear: number, id?: string}
+        args: {name: string, balance: number, rate: number, compoundsPerYear: number, id?: string}
     )
     {
         if (args.id)
@@ -42,14 +43,15 @@ export class Account
             this.id = args.id;
         }
 
+        this.name = args.name;
         this.balance = args.balance;
         this.rate = args.rate;
         this.compoundsPerYear = args.compoundsPerYear;
     }
 
-    public static newAccount(balance: number, rate: number, compoundsPerYear: number): Account
+    public static newAccount(name: string, balance: number, rate: number, compoundsPerYear: number): Account
     {
-        return new Account({balance, rate, compoundsPerYear});
+        return new Account({name, balance, rate, compoundsPerYear});
     }
 
     private static fromMomento(json: any): Account
