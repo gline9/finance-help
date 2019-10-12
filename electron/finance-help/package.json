@@ -11,7 +11,9 @@
     "e2e": "ng e2e",
     "electron-full": "grunt electron-full",
     "electron": "grunt electron",
-    "backend": "grunt backend"
+    "backend": "grunt backend",
+    "package": "electron-packager . finance-help --no-prune --ignore=/e2e --ignore=/src --ignore=/node_modules --extra-resource=node_modules/minimal-request-promise --overwrite --platform win32 --arch x64 --out dist/",
+    "help": "electron-packager --help"
   },
   "private": true,
   "dependencies": {
@@ -43,6 +45,8 @@
     "@types/node": "~8.9.4",
     "codelyzer": "^5.0.0",
     "electron": "^6.0.7",
+    "electron-installer-windows": "^2.0.0",
+    "electron-packager": "^14.0.6",
     "grunt": "^1.0.4",
     "grunt-shell": "^3.0.1",
     "jasmine-core": "~3.4.0",
@@ -53,7 +57,6 @@
     "karma-jasmine": "~2.0.1",
     "karma-jasmine-html-reporter": "^1.4.0",
     "protractor": "~5.4.0",
-    "rm-cli": "^1.4.2",
     "ts-node": "~7.0.0",
     "tslint": "~5.15.0",
     "typescript": "~3.5.3"
