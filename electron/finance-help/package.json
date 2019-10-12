@@ -9,9 +9,9 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "electron-full": "gradlew.bat installDist && rm-cli -r finance-help && cp ../../backend/finance-help/build/install/finance-help finance-help -r && ng build --base-href ./ && electron .",
-    "electron": "ng build --base-href ./ && electron .",
-    "backend": "gradlew.bat run"
+    "electron-full": "grunt electron-full",
+    "electron": "grunt electron",
+    "backend": "grunt backend"
   },
   "private": true,
   "dependencies": {
