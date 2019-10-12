@@ -10,4 +10,30 @@ Basic program for helping with managing personal finances.
 
 # Contributing
 
-Run `npm run electron-full` inside `electron/finance-help` to run the project.
+We use grunt to coordinate builds across angular-cli and gradle. To
+build the project you will need to have the grunt-cli installed globally.
+To do this run:
+
+```bash
+npm i -g grunt-cli
+```
+
+Once grunt is installed you will need to run the following commands
+inside `electron/finance-help` to get the program running.
+
+```bash
+npm i
+npm run electron-full
+```
+
+## Front End Only
+
+Once the backend has been built using `npm run electron-full` you only
+need to run `npm run electron` to re-build the front end.
+
+## Back End Only
+
+If you only want to test out rest calls on the backend it is enough
+to run `npm run backend`
+
+
