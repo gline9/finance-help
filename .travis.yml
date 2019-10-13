@@ -5,25 +5,58 @@ branches:
   only:
     - master
 
-os: linux
+os:
+  - linux
+  - windows
 dist: trusty
 jdk: openjdk11
 
-script:
-  - cd backend/finance-help
-  - chmod 777 ./gradlew
-  - ./gradlew test --scan -s
-  - ./gradlew jacocoTestReport
-  - ./gradlew sonarqube
+before_install:
+  - nvm install stable
+
+jobs:
+  include:
+    - stage: test
+      os: linux
+      script:
+        - cd backend/finance-help
+        - chmod 777 ./gradlew
+        - ./gradlew test --scan -s
+        - ./gradlew jacocoTestReport
+        - ./gradlew sonarqube
+      before_cache:
+        - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+        - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+    - os: windows
+      script:
+        - cd backend/finance-help
+        - chmod 777 ./gradlew
+        - ./gradlew test --scan -s
+        - ./gradlew jacocoTestReport
+    - script:
+        - cd electron/finance-help
+        - npm install
+        - npm run build
+    - stage: deploy
+      os: windows
+      if: tag IS present
+      script:
+        - cd electron/finance-help
+        - npm install
+        - npm run deploy
+      deploy:
+        provider: releases
+        api_key: releases
+        file: "electron/finance-help/dist/installer/Setup.exe"
+        skip_cleanup: true
+        on:
+          tags: true
 
 addons:
   sonarcloud:
     organization: "gline9"
     token:
       secure: "ksx3AK4D13iIOHa9k//Ajya/KHSToLNnrq6/D6PZ6qhjZTbh1otxfPgR3XQV6G/HtdyKznInwo1KXX0P40MkeaWE2LzEM7ld4zlhK7d3lP9f3WeyuxY8xzD3O97gG+/7UGnbIUoZeOCZWUH2Wta2/zy71jw/UFJKPd/FMFXaci3SOwDVSmfDg89K/2ZiLk7cslosuZ5AF8WoU3Q9T+OB2ZhUyUTJ2PE+TgYmstn/VtOHQ0w+9IBMIHWWa0eb3GuBal3wKbVSfIYWYjRerI11uwr/oYon1xde0GEB6R6itEgMXaJ5tJQXIvrDAnYaURFB9cHQlNRpxQ5DPcPs0TWXON6XhEc59lhSlZhGEl+VR7TJIwLCwz63fIEcHHmsuUEPclm3RhJl3HMBspQpKBD5UsD9E1XcCmsBRx7a7re+MewG2CuSj50aoKxxwJnoyTRzUnU3JRwBhjaq6HeIusC6IQDLBa2kRs4fnddOCbv2kIYETPnA//eiebQiP5KoZCdqf5CPgDfM+9feBiaRo3cwddzXHEQMQR/qZatLo88ETpGzHA7xQd6LNWE8QKUkUdwkk3up+cDJZXMaHLRqKoSQWEGa+ysxrp99ujL/G6bO/4WqeHrjVPnW0L8SCKWpvwgktl0kQG1lhvTiDAAoAkTLHuIkajLUxd6mnEGNrWQPHRQ="
-before_cache:
-  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
-  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
 
 cache:
   directories:

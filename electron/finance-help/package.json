@@ -1,19 +1,22 @@
 {
   "name": "finance-help",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "main": "main.js",
+  "description": "Helper for handling personal finances",
+  "author": "gline9",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "grunt angular-prod",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "electron-full": "grunt electron-full",
     "electron": "grunt electron",
     "backend": "grunt backend",
-    "package": "electron-packager . finance-help --no-prune --ignore=/e2e --ignore=/src --ignore=/node_modules --extra-resource=node_modules/minimal-request-promise --overwrite --platform win32 --arch x64 --out dist/",
-    "help": "electron-packager --help"
+    "package": "grunt package-electron",
+    "create-installer": "grunt create-windows-installer",
+    "deploy": "grunt deploy"
   },
   "private": true,
   "dependencies": {
@@ -45,9 +48,10 @@
     "@types/node": "~8.9.4",
     "codelyzer": "^5.0.0",
     "electron": "^6.0.7",
-    "electron-installer-windows": "^2.0.0",
     "electron-packager": "^14.0.6",
+    "electron-winstaller": "^4.0.0",
     "grunt": "^1.0.4",
+    "grunt-electron-installer": "^2.1.0",
     "grunt-shell": "^3.0.1",
     "jasmine-core": "~3.4.0",
     "jasmine-spec-reporter": "~4.2.1",
