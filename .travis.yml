@@ -1,65 +1,59 @@
 language: java
 install: true
-
 branches:
   only:
-    - master
-
+  - master
 os:
-  - linux
-  - windows
+- linux
+- windows
 dist: trusty
 jdk: openjdk11
-
 before_install:
-  - nvm install stable
-
+- nvm install stable
 jobs:
   include:
-    - stage: test
-      os: linux
-      script:
-        - cd backend/finance-help
-        - chmod 777 ./gradlew
-        - ./gradlew test --scan -s
-        - ./gradlew jacocoTestReport
-        - ./gradlew sonarqube
-      before_cache:
-        - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
-        - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
-    - os: windows
-      script:
-        - cd backend/finance-help
-        - chmod 777 ./gradlew
-        - ./gradlew test --scan -s
-        - ./gradlew jacocoTestReport
-    - script:
-        - cd electron/finance-help
-        - npm install
-        - npm run build
-    - stage: deploy
-      os: windows
-      if: tag IS present
-      script:
-        - cd electron/finance-help
-        - npm install
-        - npm run deploy
-      deploy:
-        provider: releases
-        api_key: releases
-        file: "electron/finance-help/dist/installer/Setup.exe"
-        skip_cleanup: true
-        on:
-          tags: true
-
+  - stage: test
+    os: linux
+    script:
+    - cd backend/finance-help
+    - chmod 777 ./gradlew
+    - "./gradlew test --scan -s"
+    - "./gradlew jacocoTestReport"
+    - "./gradlew sonarqube"
+    before_cache:
+    - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+    - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+  - os: windows
+    script:
+    - cd backend/finance-help
+    - chmod 777 ./gradlew
+    - "./gradlew test --scan -s"
+    - "./gradlew jacocoTestReport"
+  - script:
+    - cd electron/finance-help
+    - npm install
+    - npm run build
+  - stage: deploy
+    os: windows
+    if: tag IS present
+    script:
+    - cd electron/finance-help
+    - npm install
+    - npm run deploy
+    deploy:
+      provider: releases
+      api_key:
+        secure: qn9he0hbVr2UZrZaXYbNPgfEH4yJ3ZZY8Cjq439HVNEngIoxNYqWL2oxL4t1JX7iwOOrzN2PhEUxPC1g0TQyWSytkxeSQa/pnc/6cDcZf1HsJAOMansupEdSY+0E600eGoSmbP52rlSQ3iLFP8M2Rl/SsVqLm0E2Marq5O5PaXzQc0dbFg+UKEFyGl4TMlFe44EsZIy5kREjbEhyvB+ZWnj3WxZM904qviPEPee+fg52c0xmnjf+8Zu3/A+nBvELiEBpw8Mp7mwL3d7qz81iz14RAV0OkkW03HPu3aPaLwaEpPYuDqf4T1YOmYzxf9LLME+jdu7bXqM8ol1nRyyda1TQWCHBtP3fg33S9rIdldZ9HD9u8L6M/8nmArCKgzs0Imcp09NUds6vP9FumkiqWCMYrFJ9l6x7MjdCzyawKeTS+q1g1hrswjvV98JAoqfXo/2bRei72/XJLjzNcotjzIZBFw3JAf9YMmbFQexwiUXRVIj2KOIVJnkwNzRNrq5M6A8Xunsc2smNp5PrtiDYjl1U1K0cYckkjW5pi9zJNGR4jCncL2KdyberdPhXTye3eQQxIGl8mLaJve1HHdc1pw1H9dAPsgs4tUnDMGWgiDvA5E5K5ULgrphdLKXENoR9aK+XpD3+tBn8blET4YjzWLmpyf0WQNsjDCzEXTz6Org=
+      file: electron/finance-help/dist/installer/Setup.exe
+      skip_cleanup: true
+      on:
+        tags: true
 addons:
   sonarcloud:
-    organization: "gline9"
+    organization: gline9
     token:
-      secure: "ksx3AK4D13iIOHa9k//Ajya/KHSToLNnrq6/D6PZ6qhjZTbh1otxfPgR3XQV6G/HtdyKznInwo1KXX0P40MkeaWE2LzEM7ld4zlhK7d3lP9f3WeyuxY8xzD3O97gG+/7UGnbIUoZeOCZWUH2Wta2/zy71jw/UFJKPd/FMFXaci3SOwDVSmfDg89K/2ZiLk7cslosuZ5AF8WoU3Q9T+OB2ZhUyUTJ2PE+TgYmstn/VtOHQ0w+9IBMIHWWa0eb3GuBal3wKbVSfIYWYjRerI11uwr/oYon1xde0GEB6R6itEgMXaJ5tJQXIvrDAnYaURFB9cHQlNRpxQ5DPcPs0TWXON6XhEc59lhSlZhGEl+VR7TJIwLCwz63fIEcHHmsuUEPclm3RhJl3HMBspQpKBD5UsD9E1XcCmsBRx7a7re+MewG2CuSj50aoKxxwJnoyTRzUnU3JRwBhjaq6HeIusC6IQDLBa2kRs4fnddOCbv2kIYETPnA//eiebQiP5KoZCdqf5CPgDfM+9feBiaRo3cwddzXHEQMQR/qZatLo88ETpGzHA7xQd6LNWE8QKUkUdwkk3up+cDJZXMaHLRqKoSQWEGa+ysxrp99ujL/G6bO/4WqeHrjVPnW0L8SCKWpvwgktl0kQG1lhvTiDAAoAkTLHuIkajLUxd6mnEGNrWQPHRQ="
-
+      secure: ksx3AK4D13iIOHa9k//Ajya/KHSToLNnrq6/D6PZ6qhjZTbh1otxfPgR3XQV6G/HtdyKznInwo1KXX0P40MkeaWE2LzEM7ld4zlhK7d3lP9f3WeyuxY8xzD3O97gG+/7UGnbIUoZeOCZWUH2Wta2/zy71jw/UFJKPd/FMFXaci3SOwDVSmfDg89K/2ZiLk7cslosuZ5AF8WoU3Q9T+OB2ZhUyUTJ2PE+TgYmstn/VtOHQ0w+9IBMIHWWa0eb3GuBal3wKbVSfIYWYjRerI11uwr/oYon1xde0GEB6R6itEgMXaJ5tJQXIvrDAnYaURFB9cHQlNRpxQ5DPcPs0TWXON6XhEc59lhSlZhGEl+VR7TJIwLCwz63fIEcHHmsuUEPclm3RhJl3HMBspQpKBD5UsD9E1XcCmsBRx7a7re+MewG2CuSj50aoKxxwJnoyTRzUnU3JRwBhjaq6HeIusC6IQDLBa2kRs4fnddOCbv2kIYETPnA//eiebQiP5KoZCdqf5CPgDfM+9feBiaRo3cwddzXHEQMQR/qZatLo88ETpGzHA7xQd6LNWE8QKUkUdwkk3up+cDJZXMaHLRqKoSQWEGa+ysxrp99ujL/G6bO/4WqeHrjVPnW0L8SCKWpvwgktl0kQG1lhvTiDAAoAkTLHuIkajLUxd6mnEGNrWQPHRQ=
 cache:
   directories:
-    - $HOME/.gradle/caches/
-    - $HOME/.gradle/wrapper/
-
+  - "$HOME/.gradle/caches/"
+  - "$HOME/.gradle/wrapper/"
