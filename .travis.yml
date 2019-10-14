@@ -27,6 +27,7 @@ matrix:
     os: windows
     before_install:
     - "choco install openjdk11"
+    - "refreshenv"
     script:
     - cd backend/finance-help
     - chmod 777 ./gradlew
@@ -42,6 +43,7 @@ matrix:
     node_js: 10
     before_install:
     - "choco install openjdk11"
+    - "refreshenv"
     os: windows
     if: tag IS present
     script:
