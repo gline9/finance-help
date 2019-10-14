@@ -8,6 +8,11 @@
 
 Basic program for helping with managing personal finances.
 
+# Installing
+
+Download and run the `Setup.exe` file in the latest release to
+install.
+
 # Contributing
 
 We use grunt to coordinate builds across angular-cli and gradle. To
