@@ -3,6 +3,7 @@ install: true
 branches:
   only:
   - master
+- /^\d+\.\d+\.\d+.*$/
 dist: trusty
 matrix:
   include:
