@@ -4,6 +4,7 @@ branches:
   - master
 dist: trusty
 jdk: openjdk11
+node_js: 10
 matrix:
   include:
   - language: java
