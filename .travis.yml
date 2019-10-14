@@ -1,13 +1,23 @@
 install: true
+language: shell
+
+env:
+  global:
+  - NODEJS_VERSION: stable
+  - JAVA_VERSION: 11.0.4
+before_install:
+- git clone https://github.com/portapps/portapps ${TRAVIS_BUILD_DIR}/../portapps
+- source ${TRAVIS_BUILD_DIR}/../portapps/.travis/prepare.sh
+- bash ${TRAVIS_BUILD_DIR}/../portapps/.travis/java.sh
+- bash ${TRAVIS_BUILD_DIR}/../portapps/.travis/nodejs.sh
+
 branches:
   only:
   - master
 dist: trusty
 matrix:
   include:
-  - language: java
-    jdk: openjdk11
-    os: linux
+  - os: linux
     script:
     - cd backend/finance-help
     - chmod 777 ./gradlew
@@ -22,9 +32,7 @@ matrix:
         organization: gline9
         token:
           secure: ksx3AK4D13iIOHa9k//Ajya/KHSToLNnrq6/D6PZ6qhjZTbh1otxfPgR3XQV6G/HtdyKznInwo1KXX0P40MkeaWE2LzEM7ld4zlhK7d3lP9f3WeyuxY8xzD3O97gG+/7UGnbIUoZeOCZWUH2Wta2/zy71jw/UFJKPd/FMFXaci3SOwDVSmfDg89K/2ZiLk7cslosuZ5AF8WoU3Q9T+OB2ZhUyUTJ2PE+TgYmstn/VtOHQ0w+9IBMIHWWa0eb3GuBal3wKbVSfIYWYjRerI11uwr/oYon1xde0GEB6R6itEgMXaJ5tJQXIvrDAnYaURFB9cHQlNRpxQ5DPcPs0TWXON6XhEc59lhSlZhGEl+VR7TJIwLCwz63fIEcHHmsuUEPclm3RhJl3HMBspQpKBD5UsD9E1XcCmsBRx7a7re+MewG2CuSj50aoKxxwJnoyTRzUnU3JRwBhjaq6HeIusC6IQDLBa2kRs4fnddOCbv2kIYETPnA//eiebQiP5KoZCdqf5CPgDfM+9feBiaRo3cwddzXHEQMQR/qZatLo88ETpGzHA7xQd6LNWE8QKUkUdwkk3up+cDJZXMaHLRqKoSQWEGa+ysxrp99ujL/G6bO/4WqeHrjVPnW0L8SCKWpvwgktl0kQG1lhvTiDAAoAkTLHuIkajLUxd6mnEGNrWQPHRQ=
-  - language: node_js
-    node_js: 10
-    os: windows
+  - os: windows
     before_install:
     - "choco install openjdk11"
     - "refreshenv"
@@ -33,15 +41,11 @@ matrix:
     - chmod 777 ./gradlew
     - "./gradlew test --scan -s"
     - "./gradlew jacocoTestReport"
-  - language: node_js
-    node_js: 10
-    script:
+  - script:
     - cd electron/finance-help
     - npm install
     - npm run build
-  - language: node_js
-    node_js: 10
-    before_install:
+  - before_install:
     - "choco install openjdk11"
     - "refreshenv"
     os: windows
