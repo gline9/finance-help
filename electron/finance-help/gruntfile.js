@@ -10,13 +10,34 @@ module.exports = function(grunt) {
             ngBuild: {
                 command: "ng build --base-href ./"
             },
+            ngBuildProd: {
+                command: "ng build --base-href ./ --prod"
+            },
             electronRun: {
                 command: "electron ."
+            },
+            electronBundle: {
+                command: "electron-packager . finance-help --no-prune --ignore=/e2e --ignore=/src --ignore=/node_modules --extra-resource=node_modules/minimal-request-promise --extra-resource=node_modules/tree-kill --overwrite --platform win32 --arch x64 --out dist/"
+            },
+            electronInstaller: {
+                command: "npm run electron-installer-windows -- --src dist/finance-help-win32-x64/ --dest dist/installers/"
+            }
+        },
+        'create-windows-installer': {
+            x64: {
+                appDirectory: 'dist/finance-help-win32-x64',
+                outputDirectory: 'dist/installer',
+                authors: 'gline9',
+                exe: 'finance-help.exe',
+                title: 'finance-help',
+                name: 'financehelp',
+                version: '0.0.1'
             }
         }
     });
 
     grunt.loadNpmTasks('grunt-shell');
+    grunt.loadNpmTasks('grunt-electron-installer');
     grunt.registerTask("build-backend", "Builds gradle backend", function() {
         grunt.file.setBase("..", "..", "backend", "finance-help");
         grunt.task.run("shell:backendInstallDist");
@@ -38,5 +59,18 @@ module.exports = function(grunt) {
     grunt.registerTask("electron", ["shell:ngBuild", "shell:electronRun"]);
     
     grunt.registerTask("electron-full", ["update-backend", "electron"]);
+
+    grunt.registerTask("angular-prod", ["shell:ngBuildProd"]);
+
+    grunt.registerTask("copy-electron-dependencies", "Packages electron application", function() {
+        grunt.file.copy("dist/finance-help-win32-x64/resources/minimal-request-promise", "dist/finance-help-win32-x64/resources/app/node_modules/minimal-request-promise");
+        grunt.file.copy("dist/finance-help-win32-x64/resources/tree-kill", "dist/finance-help-win32-x64/resources/app/node_modules/tree-kill");
+    });
+
+    grunt.registerTask("package-electron", ["shell:electronBundle", "copy-electron-dependencies"]);
+
+    grunt.registerTask("create-installer", ["shell:electronInstaller"])
+
+    grunt.registerTask("deploy", ["angular-prod", "update-backend", "package-electron", "create-installer"]);
 
 };
