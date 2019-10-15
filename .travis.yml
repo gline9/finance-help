@@ -55,13 +55,13 @@ matrix:
     - source ${TRAVIS_BUILD_DIR}/../portapps/.travis/prepare.sh
     - bash ${TRAVIS_BUILD_DIR}/../portapps/.travis/java.sh
     os: windows
-    if: tag IS present
     before_script:
     - "export GRADLE_OPTS=-Dorg.gradle.daemon=false"
     script:
     - cd electron/finance-help
     - npm install
     - npm run deploy
+    - cd ../..
     deploy:
       provider: releases
       api_key:
