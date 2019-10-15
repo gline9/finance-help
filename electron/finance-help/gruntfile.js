@@ -18,9 +18,6 @@ module.exports = function(grunt) {
             },
             electronBundle: {
                 command: "electron-packager . finance-help --no-prune --ignore=/e2e --ignore=/src --ignore=/node_modules --extra-resource=node_modules/minimal-request-promise --extra-resource=node_modules/tree-kill --overwrite --platform win32 --arch x64 --out dist/"
-            },
-            electronInstaller: {
-                command: "npm run electron-installer-windows -- --src dist/finance-help-win32-x64/ --dest dist/installers/"
             }
         },
         'create-windows-installer': {
@@ -69,8 +66,6 @@ module.exports = function(grunt) {
 
     grunt.registerTask("package-electron", ["shell:electronBundle", "copy-electron-dependencies"]);
 
-    grunt.registerTask("create-installer", ["shell:electronInstaller"])
-
-    grunt.registerTask("deploy", ["angular-prod", "update-backend", "package-electron", "create-installer"]);
+    grunt.registerTask("deploy", ["angular-prod", "update-backend", "package-electron", "create-windows-installer"]);
 
 };
