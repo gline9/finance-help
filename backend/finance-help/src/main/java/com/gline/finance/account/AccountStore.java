@@ -7,4 +7,6 @@ public interface AccountStore
     List<Account> getAccounts();
 
     Account createAccount(AccountCreationRequest account);
+
+    Account deleteAccount(AccountDeletionRequest account);
 }

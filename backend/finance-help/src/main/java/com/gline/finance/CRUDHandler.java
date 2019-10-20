@@ -9,7 +9,7 @@ import java.util.List;
 
 import static ratpack.jackson.Jackson.json;
 
-public interface CRUDHandler<POST, T extends Serializable> extends Handler
+public interface CRUDHandler<P, D, T extends Serializable> extends Handler
 {
 
     @Override
@@ -20,14 +20,22 @@ public interface CRUDHandler<POST, T extends Serializable> extends Handler
                 .post(putCtx -> putCtx.parse(Memento.class).then(data -> {
                     T ret = post(makePostObject(data));
                     putCtx.render(json(ret));
+                }))
+                .delete(deleteCtx -> deleteCtx.parse(Memento.class).then(data -> {
+                    T ret = delete(makeDeleteObject(data));
+                    deleteCtx.render(json(ret));
                 })));
     }
 
     List<T> getAll();
 
-    T post(POST value);
+    T post(P value);
 
-    POST makePostObject(Memento memento);
+    P makePostObject(Memento memento);
+
+    T delete(D value);
+
+    D makeDeleteObject(Memento memento);
 
 
 }

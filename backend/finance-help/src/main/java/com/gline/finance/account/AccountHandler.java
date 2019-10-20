@@ -5,7 +5,7 @@ import com.gline.finance.serialization.Memento;
 
 import java.util.List;
 
-public class AccountHandler implements CRUDHandler<AccountCreationRequest, Account>
+public class AccountHandler implements CRUDHandler<AccountCreationRequest, AccountDeletionRequest, Account>
 {
     private final AccountStore accountStore;
 
@@ -29,6 +29,18 @@ public class AccountHandler implements CRUDHandler<AccountCreationRequest, Accou
     @Override
     public AccountCreationRequest makePostObject(Memento memento)
     {
-        return AccountCreationRequest.fromMomento(memento);
+        return AccountCreationRequest.fromMemento(memento);
+    }
+
+    @Override
+    public Account delete(AccountDeletionRequest value)
+    {
+        return accountStore.deleteAccount(value);
+    }
+
+    @Override
+    public AccountDeletionRequest makeDeleteObject(Memento memento)
+    {
+        return AccountDeletionRequest.fromMemento(memento);
     }
 }
