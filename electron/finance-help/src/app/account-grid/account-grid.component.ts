@@ -21,12 +21,8 @@ export class AccountGridComponent implements OnInit, OnDestroy
         loadMode: 'raw',
         insert: (values) => this.accountService.createAccount(
             Account.newAccount(values.name, values.balance, values.rate, values.compoundsPerYear)
-        ).toPromise().then((value) => {
-
-            console.log(value);
-
-            return value;
-        }),
+        ).toPromise(),
+        remove: (id) => this.accountService.deleteAccount(id).toPromise(),
         load: () => this.accountService.getAllAccounts().toPromise()
     });
 

@@ -32,6 +32,21 @@ public class InMemoryAccountStore implements AccountStore, PersistableStore
     }
 
     @Override
+    public Account deleteAccount(AccountDeletionRequest request)
+    {
+        String id = request.getId();
+
+        Account account = accountMap.remove(id);
+
+        if (null == account)
+        {
+            throw new IllegalArgumentException("Account not found for id '" + id + "'");
+        }
+
+        return account;
+    }
+
+    @Override
     public String getRepoPersistenceName()
     {
         return "accounts";

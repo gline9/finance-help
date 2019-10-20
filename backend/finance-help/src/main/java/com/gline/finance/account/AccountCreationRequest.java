@@ -23,7 +23,7 @@ public class AccountCreationRequest
         name = memento.getValue(NAME_FIELD, Converters.identity(String.class));
     }
 
-    public static AccountCreationRequest fromMomento(Memento memento)
+    public static AccountCreationRequest fromMemento(Memento memento)
     {
         return new AccountCreationRequest(memento);
     }

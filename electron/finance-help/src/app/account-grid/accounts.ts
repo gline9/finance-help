@@ -19,6 +19,12 @@ export class AccountsService
         return this.httpClient.post(this.ACCOUNT_URL, account).pipe(map(body => Account['fromMomento'](body)));
     }
 
+    public deleteAccount(id: string): Observable<Account>
+    {
+        // tslint:disable-next-line:no-string-literal
+        return this.httpClient.request('DELETE', this.ACCOUNT_URL, {body: {id}}).pipe(map(body => Account['fromMomento'](body)));
+    }
+
     public getAllAccounts(): Observable<Account[]>
     {
         return this.httpClient.get<any[]>(this.ACCOUNT_URL);
