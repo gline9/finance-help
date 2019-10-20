@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { AccountsService, Account } from './accounts';
 import { Subscription, timer } from 'rxjs';
-import ArrayStore from 'devextreme/data/array_store';
+import CustomStore from 'devextreme/data/custom_store';
 import { DxDataGridComponent } from 'devextreme-angular';
 
 
@@ -16,14 +16,18 @@ export class AccountGridComponent implements OnInit, OnDestroy
 {
     @ViewChild('dataGrid', {static: true}) dataGrid: DxDataGridComponent;
 
-    accountList: Account[] = [];
-
-    dataSource = new ArrayStore({
-        data: this.accountList,
+    dataSource = new CustomStore({
         key: 'id',
-        onInserted: (data: any) => {
-            this.createAccount(data);
-        }
+        loadMode: 'raw',
+        insert: (values) => this.accountService.createAccount(
+            Account.newAccount(values.name, values.balance, values.rate, values.compoundsPerYear)
+        ).toPromise().then((value) => {
+
+            console.log(value);
+
+            return value;
+        }),
+        load: () => this.accountService.getAllAccounts().toPromise()
     });
 
     private accountSubscription: Subscription;
@@ -35,36 +39,14 @@ export class AccountGridComponent implements OnInit, OnDestroy
 
     public ngOnInit(): void
     {
-
         this.accountSubscription = timer(0, 10000).subscribe(() => {
-            this.updateAccountList();
+            this.dataGrid.instance.getDataSource().reload();
         });
     }
 
     public ngOnDestroy(): void
     {
         this.accountSubscription.unsubscribe();
-    }
-
-    private updateAccountList(): void
-    {
-        this.accountService.getAllAccounts().subscribe(
-            (accounts) =>
-            {
-                this.accountList.splice(0);
-                this.accountList.push(...accounts);
-                this.dataGrid.instance.refresh();
-            }
-        );
-    }
-
-    public createAccount(accountData: any)
-    {
-        this.accountService.createAccount(
-            Account.newAccount(accountData.name, accountData.balance, accountData.rate, accountData.compoundsPerYear)
-        ).subscribe(() => {
-            this.updateAccountList();
-        });
     }
 
 }

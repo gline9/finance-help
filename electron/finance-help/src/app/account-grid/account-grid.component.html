@@ -1,6 +1,9 @@
 
 <dx-data-grid #dataGrid
     [dataSource]="dataSource">
+    <dxo-load-panel
+        [enabled]="false">
+    </dxo-load-panel>
     <dxo-editing
         [allowUpdating]="false"
         [allowAdding]="true"
