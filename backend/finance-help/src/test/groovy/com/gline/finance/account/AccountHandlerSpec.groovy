@@ -1,19 +1,17 @@
 package com.gline.finance.account
 
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.gline.finance.Main
-import ratpack.handling.Handler
-import ratpack.server.RatpackServer
-import ratpack.test.embed.EmbeddedApp
+import com.gline.finance.ServerTester
 import spock.lang.Specification
 
 class AccountHandlerSpec extends Specification
 {
+    ServerTester serverTester = new ServerTester()
+
     void "should create account on post"()
     {
         given:
         def accountStore = Mock(AccountStore)
-        def app = createApp(new AccountHandler(accountStore))
+        def app = serverTester.createApp(new AccountHandler(accountStore))
 
         when:
 
@@ -37,7 +35,7 @@ class AccountHandlerSpec extends Specification
         given:
 
         def accountStore = Mock(AccountStore)
-        def app = createApp(new AccountHandler(accountStore))
+        def app = serverTester.createApp(new AccountHandler(accountStore))
 
         when:
 
@@ -55,13 +53,4 @@ class AccountHandlerSpec extends Specification
         1 * accountStore.deleteAccount({it.id == "foobas"})
     }
 
-    private EmbeddedApp createApp(Handler handler)
-    {
-        EmbeddedApp.fromServer(RatpackServer.start {
-            it.registryOf {
-                it.add(ObjectMapper.class, Main.getObjectMapper())
-            }.handler({ handler})
-        })
-
-    }
 }

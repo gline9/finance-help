@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { APP_URL } from './../app.service';
+import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -6,10 +7,11 @@ import { map } from 'rxjs/operators';
 @Injectable({providedIn: 'root'})
 export class AccountsService
 {
-    private readonly ACCOUNT_URL = 'http://localhost:5150/accounts';
+    private readonly ACCOUNT_URL = this.url + '/accounts';
 
     constructor(
-        private httpClient: HttpClient
+        private httpClient: HttpClient,
+        @Inject(APP_URL) private readonly url: string
     )
     {}
 
@@ -34,7 +36,7 @@ export class AccountsService
 
 export class Account
 {
-    private id?: string;
+    id?: string;
     name: string;
     balance: number;
     rate: number;

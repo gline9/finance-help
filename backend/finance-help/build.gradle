@@ -51,6 +51,13 @@ dependencies {
     testImplementation 'org.spockframework:spock-core:1.2-groovy-2.5'
     testImplementation 'junit:junit:4.12'
     testImplementation ratpack.dependency('groovy-test')
+    testImplementation group: 'com.nagternal', name: 'spock-genesis', version: '0.6.0'
+    testRuntime group: 'org.slf4j', name: 'slf4j-nop', version: '1.7.28'
+
+}
+
+configurations {
+    testCompile.exclude module: 'slf4j-simple'
 }
 
 application {

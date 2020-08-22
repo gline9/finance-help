@@ -2,6 +2,7 @@ package com.gline.finance.persistence
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.gline.finance.Main
+import com.gline.finance.ServerTester
 import ratpack.handling.Handler
 import ratpack.server.RatpackServer
 import ratpack.test.embed.EmbeddedApp
@@ -9,11 +10,13 @@ import spock.lang.Specification
 
 class PersistenceHandlerSpec extends Specification
 {
+    ServerTester serverTester = new ServerTester()
+
     void "should attempt to save when saving"()
     {
         given:
         def persistenceManager = Mock(PersistenceManager)
-        def app = createApp(new PersistenceHandler(persistenceManager))
+        def app = serverTester.createApp(new PersistenceHandler(persistenceManager))
 
         when:
 
@@ -36,7 +39,7 @@ class PersistenceHandlerSpec extends Specification
         given:
 
         def persistenceManager = Mock(PersistenceManager)
-        def app = createApp(new PersistenceHandler(persistenceManager))
+        def app = serverTester.createApp(new PersistenceHandler(persistenceManager))
 
         when:
 
@@ -54,15 +57,5 @@ class PersistenceHandlerSpec extends Specification
         then:
 
         1 * persistenceManager.readFromFile(new File("foobar"))
-    }
-
-    private EmbeddedApp createApp(Handler handler)
-    {
-        EmbeddedApp.fromServer(RatpackServer.start {
-            it.registryOf {
-                it.add(ObjectMapper.class, Main.getObjectMapper())
-            }.handler({ handler})
-        })
-
     }
 }

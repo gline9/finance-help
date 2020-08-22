@@ -97,7 +97,7 @@ class InMemoryAccountStoreSpec extends Specification
         accountCreationMemento.setProperty("compoundsPerYear", 1)
         accountCreationMemento.setProperty("name", "foobar")
         def accountCreation = AccountCreationRequest.fromMemento(accountCreationMemento)
-        Account created = accountStore.createAccount(accountCreation)
+        accountStore.createAccount(accountCreation)
 
         def accountDeletionMemento = Memento.emptyBean()
         accountDeletionMemento.setProperty("id", "foobar")
@@ -106,7 +106,7 @@ class InMemoryAccountStoreSpec extends Specification
 
         when:
 
-        def account = accountStore.deleteAccount(accountDeletion)
+        accountStore.deleteAccount(accountDeletion)
 
         then:
 
@@ -114,5 +114,28 @@ class InMemoryAccountStoreSpec extends Specification
         "Account not found for id 'foobar'" == exception.message
         1 == accountStore.getAccounts().size()
         "foobar" == accountStore.getAccounts()[0].name
+    }
+
+    void "should allow getting accounts by id"()
+    {
+        given:
+
+        def accountStore = new InMemoryAccountStore()
+
+        def accountCreationMemento = Memento.emptyBean()
+        accountCreationMemento.setProperty("balance", 100d)
+        accountCreationMemento.setProperty("rate", 1)
+        accountCreationMemento.setProperty("compoundsPerYear", 1)
+        accountCreationMemento.setProperty("name", "foobar")
+        def accountCreation = AccountCreationRequest.fromMemento(accountCreationMemento)
+        Account account = accountStore.createAccount(accountCreation)
+
+        when:
+
+        def found = accountStore.getAccountById(account.id)
+
+        then:
+
+        account == found
     }
 }

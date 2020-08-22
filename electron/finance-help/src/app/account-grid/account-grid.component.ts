@@ -26,6 +26,9 @@ export class AccountGridComponent implements OnInit, OnDestroy
         load: () => this.accountService.getAllAccounts().toPromise()
     });
 
+    depositVisible = false;
+    depositAccount: Account;
+
     private accountSubscription: Subscription;
 
     constructor(
@@ -43,6 +46,23 @@ export class AccountGridComponent implements OnInit, OnDestroy
     public ngOnDestroy(): void
     {
         this.accountSubscription.unsubscribe();
+    }
+
+    public onToolbarPreparing(toolbar: any): void
+    {
+        toolbar.toolbarOptions.items.unshift({
+            location: 'after',
+            widget: 'dxButton',
+            options: {
+                icon: 'mdi mdi-bank-transfer',
+                hint: 'Transfer'
+            }
+        });
+    }
+
+    public depositClick = (args: {row: {data: Account}}) => {
+        this.depositVisible = true;
+        this.depositAccount = args.row.data;
     }
 
 }
