@@ -30,6 +30,7 @@
             "styles": [
               "node_modules/devextreme/dist/css/dx.common.css",
               "node_modules/devextreme/dist/css/dx.material.orange.dark.compact.css",
+              "node_modules/@mdi/font/css/materialdesignicons.min.css",
               "src/styles.scss"
             ],
             "scripts": []

@@ -22,6 +22,12 @@ public class InMemoryAccountStore implements AccountStore, PersistableStore
     }
 
     @Override
+    public Account getAccountById(String id)
+    {
+        return accountMap.get(id);
+    }
+
+    @Override
     public Account createAccount(AccountCreationRequest request)
     {
         Account created = request.create();

@@ -1,10 +1,11 @@
 package com.gline.finance.persistence;
 
+import com.gline.finance.CommandHandler;
 import com.gline.finance.serialization.Memento;
 import ratpack.handling.Context;
 import ratpack.handling.Handler;
 
-public class PersistenceHandler implements Handler
+public class PersistenceHandler implements CommandHandler<PersistenceCommand>
 {
     private final PersistenceManager persistenceManager;
 
@@ -14,12 +15,15 @@ public class PersistenceHandler implements Handler
     }
 
     @Override
-    public void handle(Context ctx) throws Exception
+    public PersistenceCommand parseCommand(Memento memento)
     {
-        ctx.byMethod(subCtx -> subCtx
-            .post(postCtx -> postCtx.parse(Memento.class).then(data -> {
-                PersistenceCommand.fromMemento(data).execute(persistenceManager);
-                postCtx.render("{\"success\": true}");
-            })));
+        return PersistenceCommand.fromMemento(memento);
+    }
+
+    @Override
+    public boolean handleCommand(PersistenceCommand command) throws Exception
+    {
+        command.execute(persistenceManager);
+        return true;
     }
 }

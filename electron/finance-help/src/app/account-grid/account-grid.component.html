@@ -1,6 +1,7 @@
 
 <dx-data-grid #dataGrid
-    [dataSource]="dataSource">
+    [dataSource]="dataSource"
+    (onToolbarPreparing)="onToolbarPreparing($event)">
     <dxo-load-panel
         [enabled]="false">
     </dxo-load-panel>
@@ -33,4 +34,48 @@
         alignment="left"
         dataField="compoundsPerYear">
     </dxi-column>
+    <dxi-column type="buttons">
+        <dxi-button
+            name="deposit"
+            icon="mdi mdi-bank-transfer-in"
+            hint="Deposit"
+            [onClick]="depositClick">
+        </dxi-button>
+        <dxi-button
+            name="withdraw"
+            icon="mdi mdi-bank-transfer-out"
+            hint="Withdraw"
+            [onClick]="withdrawClick">
+        </dxi-button>
+        <dxi-button name="delete"></dxi-button>
+    </dxi-column>
 </dx-data-grid>
+
+<dx-popup
+    [(visible)]="depositVisible"
+    title="Deposit into Account">
+    <app-deposit
+        [accountStore]="dataSource"
+        [selectedAccount]="depositAccount"
+        (depositSuccessful)="depositVisible = false">
+    </app-deposit>
+</dx-popup>
+
+<dx-popup
+    [(visible)]="withdrawalVisible"
+    title="Withdraw from Account">
+    <app-withdrawal
+        [accountStore]="dataSource"
+        [selectedAccount]="withdrawalAccount"
+        (withdrawalSuccessful)="withdrawalVisible = false">
+    </app-withdrawal>
+</dx-popup>
+
+<dx-popup
+    [(visible)]="transferVisible"
+    title="Transfer between Accounts">
+    <app-transfer
+        [accountStore]="dataSource"
+        (transferSuccessful)="transferVisible = false">
+    </app-transfer>
+</dx-popup>

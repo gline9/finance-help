@@ -63,6 +63,11 @@ public class Account implements Serializable
         return balance;
     }
 
+    public void setBalance(double value)
+    {
+        this.balance = value;
+    }
+
     public String getId()
     {
         return id;

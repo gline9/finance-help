@@ -1,0 +1,38 @@
+<form (submit)="onDeposit()">
+    <dx-form
+        id="deposit"
+        [formData]="depositData">
+        <dxi-item
+            dataField="account"
+            editorType="dxSelectBox"
+            [editorOptions]="{
+                dataSource: accountStore,
+                displayExpr: 'name',
+                valueExpr: 'id'
+            }">
+            <dxi-validation-rule
+                type="required">
+            </dxi-validation-rule>
+        </dxi-item>
+        <dxi-item
+            dataField="amount"
+            editorType="dxNumberBox">
+            <dxi-validation-rule
+                type="required">
+            </dxi-validation-rule>
+            <dxi-validation-rule
+                type="range"
+                [min]="1e-20"
+                message="Amount must be greater than zero.">
+            </dxi-validation-rule>
+        </dxi-item>
+        <dxi-item 
+            itemType="button"
+            horizontalAlignment="left"
+            [buttonOptions]="{
+                text: 'Deposit',
+                useSubmitBehavior: true
+            }">
+        </dxi-item>
+    </dx-form>
+</form>
