@@ -1,9 +1,21 @@
-<form (submit)="onDeposit()">
+<form (submit)="onTransfer()">
     <dx-form
-        id="deposit"
-        [formData]="depositData">
+        id="transfer"
+        [formData]="transferData">
         <dxi-item
-            dataField="account"
+            dataField="fromAccount"
+            editorType="dxSelectBox"
+            [editorOptions]="{
+                dataSource: accountStore,
+                displayExpr: 'name',
+                valueExpr: 'id'
+            }">
+            <dxi-validation-rule
+                type="required">
+            </dxi-validation-rule>
+        </dxi-item>
+        <dxi-item
+            dataField="toAccount"
             editorType="dxSelectBox"
             [editorOptions]="{
                 dataSource: accountStore,
@@ -30,7 +42,7 @@
             itemType="button"
             horizontalAlignment="left"
             [buttonOptions]="{
-                text: 'Deposit',
+                text: 'Transfer',
                 useSubmitBehavior: true
             }">
         </dxi-item>

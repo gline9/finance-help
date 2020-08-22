@@ -29,6 +29,11 @@ export class AccountGridComponent implements OnInit, OnDestroy
     depositVisible = false;
     depositAccount: Account;
 
+    withdrawalVisible = false;
+    withdrawalAccount: Account;
+
+    transferVisible = false;
+
     private accountSubscription: Subscription;
 
     constructor(
@@ -55,7 +60,8 @@ export class AccountGridComponent implements OnInit, OnDestroy
             widget: 'dxButton',
             options: {
                 icon: 'mdi mdi-bank-transfer',
-                hint: 'Transfer'
+                hint: 'Transfer',
+                onClick: this.transferClick
             }
         });
     }
@@ -63,6 +69,15 @@ export class AccountGridComponent implements OnInit, OnDestroy
     public depositClick = (args: {row: {data: Account}}) => {
         this.depositVisible = true;
         this.depositAccount = args.row.data;
+    }
+
+    public withdrawClick = (args: {row: {data: Account}}) => {
+        this.withdrawalVisible = true;
+        this.withdrawalAccount = args.row.data;
+    }
+
+    public transferClick = () => {
+        this.transferVisible = true;
     }
 
 }

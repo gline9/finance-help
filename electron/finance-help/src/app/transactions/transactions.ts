@@ -9,8 +9,8 @@ import { Account } from '../account-grid/accounts';
 @Injectable({providedIn: 'root'})
 export class TransactionService
 {
-    private readonly DEPOSIT_URL = this.url + '/transactions/transfer';
-    private readonly WITHDRAWAL_URL = this.url + '/transactions/transfer';
+    private readonly DEPOSIT_URL = this.url + '/transactions/deposit';
+    private readonly WITHDRAWAL_URL = this.url + '/transactions/withdrawal';
     private readonly TRANSFER_URL = this.url + '/transactions/transfer';
 
     constructor(

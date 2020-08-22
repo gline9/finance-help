@@ -12,6 +12,9 @@ import { AccountGridComponent } from './account-grid/account-grid.component';
 import { NgxElectronModule } from 'ngx-electron';
 import { OpenFileComponent } from './open-file/open-file.component';
 import { AccountOverviewComponent } from './account-overview/account-overview.component';
+import { FormsModule } from '@angular/forms';
+import { WithdrawalComponent } from './transactions/withdrawal/withdrawal.component';
+import { TransferComponent } from './transactions/transfer/transfer.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +23,9 @@ import { AccountOverviewComponent } from './account-overview/account-overview.co
     AccountGridComponent,
     OpenFileComponent,
     AccountOverviewComponent,
-    DepositComponent
+    DepositComponent,
+    WithdrawalComponent,
+    TransferComponent
   ],
   imports: [
     BrowserModule,
@@ -31,7 +36,8 @@ import { AccountOverviewComponent } from './account-overview/account-overview.co
     DxDataGridModule,
     DxButtonModule,
     DxPopupModule,
-    NgxElectronModule
+    NgxElectronModule,
+    FormsModule
   ],
   providers: [
     AppService

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { TransactionService, Deposit } from '../transactions';
 import CustomStore from 'devextreme/data/custom_store';
 
@@ -15,8 +15,10 @@ export class DepositComponent
     @Input()
     set selectedAccount(account: Account)
     {
-        this.depositData.account = account.id;
+        this.depositData.account = account && account.id;
     }
+
+    @Output() depositSuccessful = new EventEmitter<undefined>();
 
     depositData: {account?: string, amount?: number} = {};
 
@@ -25,14 +27,16 @@ export class DepositComponent
     )
     {}
 
-    public onDeposit(args: any): void
+    public onDeposit(): void
     {
-        this.accountStore.byKey(args.account).then((account) => {
+        this.accountStore.byKey(this.depositData.account).then((account) => {
 
             return this.transactionService.performTransaction(
                 Deposit.intoAccount(
                     account,
-                    args.amount)).toPromise();
+                    this.depositData.amount)).toPromise();
+        }).then(() => {
+            this.depositSuccessful.emit();
         });
     }
 }

@@ -1,7 +1,7 @@
-<form (submit)="onDeposit()">
+<form (submit)="onWithdrawal()">
     <dx-form
-        id="deposit"
-        [formData]="depositData">
+        id="withdrawal"
+        [formData]="withdrawalData">
         <dxi-item
             dataField="account"
             editorType="dxSelectBox"
@@ -30,7 +30,7 @@
             itemType="button"
             horizontalAlignment="left"
             [buttonOptions]="{
-                text: 'Deposit',
+                text: 'Withdraw',
                 useSubmitBehavior: true
             }">
         </dxi-item>
