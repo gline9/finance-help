@@ -28,7 +28,7 @@ module.exports = function(grunt) {
                 exe: 'finance-help.exe',
                 title: 'finance-help',
                 name: 'financehelp',
-                version: '0.0.1'
+                version: '0.1.0'
             }
         }
     });
